@@ -1,6 +1,4 @@
 const webpack = require("webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
@@ -106,18 +104,6 @@ const commonConfig = (env) => ({
     ],
   },
   plugins: [
-    new ESLintPlugin({
-      extensions: [".ts", ".tsx"],
-      failOnWarning: true,
-    }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, "../public/static"),
-    //       to: BUILD_PATH,
-    //     }
-    //   ]
-    // }),
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, "../public/index.html"),
       chunks: ["index"],

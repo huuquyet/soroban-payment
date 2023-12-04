@@ -2,9 +2,14 @@
 
 # dependencies
 node_modules
-*/**/node_modules
-/.pnp
+**/node_modules
 .pnp.js
+.pnp*
+
+.yarn/*
+!.yarn/sdks
+!.yarn/releases
+!.yarn/plugins
 
 # testing
 /coverage

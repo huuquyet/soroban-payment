@@ -381,13 +381,13 @@ export const SendPayment = (props: SendPaymentProps) => {
             {renderStep(stepCount)}
           </Card>
         </div>
-        {connectionError !== null &&
-          createPortal(
-            <div className="notification-container">
-              <Notification title={connectionError!} variant="error" />
-            </div>,
-            document.getElementById("root")!,
-          )}
+        <div className="notification-container">
+          {connectionError !== null &&
+            createPortal(
+              <Notification title={connectionError!} variant="error" />,
+              document.getElementById("root")!
+            )}
+        </div>
       </div>
     </>
   );
