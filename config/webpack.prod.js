@@ -1,5 +1,5 @@
 const { merge } = require("webpack-merge");
-const webpack = require("webpack");
+const { DefinePlugin } = require("webpack");
 const I18nextWebpackPlugin = require("i18next-scanner-webpack");
 const { commonConfig } = require("./webpack.common.js");
 
@@ -13,7 +13,7 @@ const prodConfig = (env = { PRODUCTION: false, TRANSLATIONS: false }) => ({
   },
 
   plugins: [
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       DEV_SERVER: false,
     }),
     ...(env.TRANSLATIONS

@@ -1,5 +1,5 @@
 const { merge } = require("webpack-merge");
-const webpack = require("webpack");
+const { DefinePlugin } = require("webpack");
 const { commonConfig } = require("./webpack.common.js");
 
 const devConfig = {
@@ -9,7 +9,7 @@ const devConfig = {
     port: 9000,
   },
   plugins: [
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       DEV_SERVER: true,
     })
   ],

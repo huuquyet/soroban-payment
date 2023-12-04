@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const path = require("path");
 
-const { DEFAULT_STATS } = require("./stats");
+const { DEFAULT_STATS } = require.resolve("./stats");
 
 const BUILD_PATH = path.resolve(__dirname, "../build");
 
@@ -46,33 +46,25 @@ const commonConfig = (env) => ({
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: require.resolve("html-loader"),
           },
         ],
       },
       {
         test: /\.(ts|tsx)$/,
-        use: ["ts-loader"],
+        use: [require.resolve("ts-loader")],
         exclude: /node-modules/,
       },
       {
         test: /\.(js)$/,
-        use: ["babel-loader"],
+        use: [require.resolve("babel-loader")],
         include: /webextension-polyfill/,
       },
       {
         test: /\.png$/,
         use: [
           {
-            loader: "file-loader",
-          },
-        ],
-      },
-      {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: "svg-url-loader",
+            loader: require.resolve("file-loader"),
           },
         ],
       },
@@ -81,19 +73,19 @@ const commonConfig = (env) => ({
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: require.resolve("css-loader"),
             options: {
               sourceMap: true,
             },
           },
-          { loader: "sass-loader" },
+          { loader: require.resolve("sass-loader") },
         ],
       },
       {
         test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: "file-loader",
+            loader: require.resolve("file-loader"),
             options: {
               name: "[name].[ext]",
               outputPath: "fonts/",

@@ -24,9 +24,9 @@
   "keywords": [],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/huuquyet/soroban-payment/issues"
+    "url": "https://github.com/stellar/soroban-dapps-challenge/issues"
   },
-  "homepage": "https://github.com/huuquyet/soroban-payment#readme",
+  "homepage": "https://github.com/stellar/soroban-dapps-challenge#readme",
   "dependencies": {
     "@stellar/design-system": "^1.1.0",
     "bignumber.js": "^9.1.2",
@@ -48,6 +48,7 @@
     "babel-polyfill": "^6.26.0",
     "buffer": "^6.0.3",
     "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "i18next-scanner-webpack": "^0.9.1",
@@ -57,6 +58,7 @@
     "ts-loader": "^9.5.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.3.2",
+    "vercel": "^32.6.1",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
