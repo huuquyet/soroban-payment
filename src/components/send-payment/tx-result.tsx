@@ -1,16 +1,10 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  IconButton,
-  Icon,
-  Heading,
-} from "@stellar/design-system";
-import { copyContent } from "../../helpers/dom";
+import { Button, Card, Heading, Icon, IconButton } from '@stellar/design-system'
+import React from 'react'
+import { copyContent } from '../../helpers/dom'
 
 interface TxResultProps {
-  resultXDR: string;
-  onClick: () => void;
+  resultXDR: string
+  onClick: () => void
 }
 
 export const TxResult = (props: TxResultProps) => (
@@ -37,4 +31,4 @@ export const TxResult = (props: TxResultProps) => (
       </Button>
     </div>
   </>
-);
+)

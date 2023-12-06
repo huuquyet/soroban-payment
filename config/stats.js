@@ -13,8 +13,8 @@ const DEFAULT_STATS = {
   excludeAssets: [/\.d\.ts/, /\.png/, /\.jpe?g/],
   hash: true,
   timings: true,
-};
+}
 
 module.exports = {
   DEFAULT_STATS,
-};
+}

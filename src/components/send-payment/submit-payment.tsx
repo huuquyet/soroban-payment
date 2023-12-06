@@ -1,25 +1,17 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  Heading,
-  IconButton,
-  Icon,
-  Loader,
-  Profile,
-} from "@stellar/design-system";
-import { copyContent } from "../../helpers/dom";
+import { Button, Card, Heading, Icon, IconButton, Loader, Profile } from '@stellar/design-system'
+import React from 'react'
+import { copyContent } from '../../helpers/dom'
 
 interface SubmitPaymentProps {
-  amount: string;
-  destination: string;
-  fee: string;
-  isSubmitting: boolean;
-  memo: string;
-  network: string;
-  onClick: () => void;
-  signedXdr: string;
-  tokenSymbol: string;
+  amount: string
+  destination: string
+  fee: string
+  isSubmitting: boolean
+  memo: string
+  network: string
+  onClick: () => void
+  signedXdr: string
+  tokenSymbol: string
 }
 
 export const SubmitPayment = (props: SubmitPaymentProps) => (
@@ -73,4 +65,4 @@ export const SubmitPayment = (props: SubmitPaymentProps) => (
       </Button>
     </div>
   </>
-);
+)

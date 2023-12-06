@@ -1,25 +1,25 @@
-import React, { ChangeEvent } from "react";
-import BigNumber from "bignumber.js";
-import { Button, Heading, Input } from "@stellar/design-system";
-import { formatTokenAmount } from "../../helpers/format";
+import { Button, Heading, Input } from '@stellar/design-system'
+import BigNumber from 'bignumber.js'
+import React, { ChangeEvent } from 'react'
+import { formatTokenAmount } from '../../helpers/format'
 
 interface SendAmountProps {
-  amount: string;
-  decimals: number;
-  balance: string;
-  onClick: () => void;
-  setAmount: (amount: string) => void;
-  tokenSymbol: string;
+  amount: string
+  decimals: number
+  balance: string
+  onClick: () => void
+  setAmount: (amount: string) => void
+  tokenSymbol: string
 }
 
 export const SendAmount = (props: SendAmountProps) => {
   // User needs to have enough tokens to transfer the amount they have provided
   const canFulfillPayment = new BigNumber(props.amount).isLessThanOrEqualTo(
-    new BigNumber(props.balance),
-  );
+    new BigNumber(props.balance)
+  )
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    props.setAmount(event.target.value);
-  };
+    props.setAmount(event.target.value)
+  }
 
   return (
     <>
@@ -27,8 +27,7 @@ export const SendAmount = (props: SendAmountProps) => {
         Available Balance
       </Heading>
       <Heading size="sm" as="h2" addlClassName="balance">
-        {formatTokenAmount(new BigNumber(props.balance), props.decimals)}{" "}
-        {props.tokenSymbol}
+        {formatTokenAmount(new BigNumber(props.balance), props.decimals)} {props.tokenSymbol}
       </Heading>
       <Input
         fieldSize="md"
@@ -49,5 +48,5 @@ export const SendAmount = (props: SendAmountProps) => {
         </Button>
       </div>
     </>
-  );
-};
+  )
+}

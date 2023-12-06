@@ -1,16 +1,16 @@
-import React, { ChangeEvent } from "react";
-import { Button, Heading, Input } from "@stellar/design-system";
+import { Button, Heading, Input } from '@stellar/design-system'
+import React, { ChangeEvent } from 'react'
 
 interface PaymentDestProps {
-  destination: string;
-  setDestination: (address: string) => void;
-  onClick: () => void;
+  destination: string
+  setDestination: (address: string) => void
+  onClick: () => void
 }
 
 export const PaymentDest = (props: PaymentDestProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    props.setDestination(event.target.value);
-  };
+    props.setDestination(event.target.value)
+  }
 
   return (
     <>
@@ -36,5 +36,5 @@ export const PaymentDest = (props: PaymentDestProps) => {
         </Button>
       </div>
     </>
-  );
-};
+  )
+}

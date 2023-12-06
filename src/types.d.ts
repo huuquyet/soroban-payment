@@ -1,2 +1,1 @@
-
-declare module "stellar-identicon-js";
+declare module 'stellar-identicon-js'

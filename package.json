@@ -2,14 +2,21 @@
   "name": "soroban-payment",
   "version": "1.0.0",
   "description": "An example dapp for making payments on Soroban",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --config config/webpack.prod.js",
-    "start": "webpack-dev-server --config config/webpack.dev.js"
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/stellar/soroban-dapps-challenge/issues"
   },
+  "homepage": "https://github.com/stellar/soroban-dapps-challenge#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/huuquyet/soroban-payment.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config config/webpack.prod.js",
+    "clean": "git clean -xdf",
+    "lint": "yarn dlx @biomejs/biome check --apply .",
+    "start": "webpack-dev-server --config config/webpack.dev.js"
   },
   "browserslist": {
     "production": [
@@ -21,12 +28,6 @@
       "last 1 firefox version"
     ]
   },
-  "keywords": [],
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/stellar/soroban-dapps-challenge/issues"
-  },
-  "homepage": "https://github.com/stellar/soroban-dapps-challenge#readme",
   "dependencies": {
     "@stellar/design-system": "^1.1.0",
     "bignumber.js": "^9.1.2",
@@ -41,6 +42,7 @@
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@biomejs/biome": "^1.4.1",
     "@stellar/tsconfig": "^1.0.2",
     "@types/react": "^18.2.41",
     "@types/react-dom": "^18.2.17",

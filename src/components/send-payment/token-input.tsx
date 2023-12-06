@@ -1,18 +1,18 @@
-import React, { ChangeEvent } from "react";
-import { Button, Heading, Input } from "@stellar/design-system";
+import { Button, Heading, Input } from '@stellar/design-system'
+import React, { ChangeEvent } from 'react'
 
 interface TokenInputProps {
-  onClick: (value: string) => void;
+  onClick: (value: string) => void
 }
 
 export const TokenInput = (props: TokenInputProps) => {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('')
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+    setValue(event.target.value)
+  }
   const onClick = () => {
-    props.onClick(value);
-  };
+    props.onClick(value)
+  }
   return (
     <>
       <Heading as="h1" size="sm">
@@ -37,5 +37,5 @@ export const TokenInput = (props: TokenInputProps) => {
         </Button>
       </div>
     </>
-  );
-};
+  )
+}
