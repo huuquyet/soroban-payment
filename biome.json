@@ -1,41 +1,40 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
-	"organizeImports": {
-	  "enabled": true
-	},
-  
-	"files": {
-	  "ignoreUnknown": true,
-	  "ignore": ["**/node_modules", ".pnp*", ".vercel", ".yarn", "dist", "types", "public", "build"]
-	},
-	"linter": {
-	  "enabled": true,
-	  "rules": {
-		"recommended": true,
-		"style": {
-		  "noNonNullAssertion": "off"
-		}
-	  }
-	},
-	"formatter": {
-	  "enabled": true,
-	  "formatWithErrors": false,
-	  "indentStyle": "space",
-	  "indentWidth": 2,
-	  "lineWidth": 100,
-	  "ignore": []
-	},
-	"javascript": {
-	  "formatter": {
-		"quoteStyle": "single",
-		"trailingComma": "es5",
-		"semicolons": "asNeeded"
-	  }
-	},
-	"json": {
-	  "parser": {
-		"allowComments": true
-	  }
-	}
+  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+
+  "files": {
+    "ignoreUnknown": true,
+    "ignore": ["**/node_modules", ".pnp*", ".vercel", ".yarn", "dist", "types", "public", "build"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "ignore": []
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingComma": "es5",
+      "semicolons": "asNeeded"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
   }
-  
+}

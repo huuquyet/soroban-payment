@@ -2357,6 +2357,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/events@npm:^3":
+  version: 3.0.3
+  resolution: "@types/events@npm:3.0.3"
+  checksum: 3a56f8c51eb4ebc0d05dcadca0c6636c816acc10216ce36c976fad11e54a01f4bb979a07211355686015884753b37f17d74bfdc7aaf4ebb027c1e8a501c7b21d
+  languageName: node
+  linkType: hard
+
 "@types/express-serve-static-core@npm:*, @types/express-serve-static-core@npm:^4.17.33":
   version: 4.17.35
   resolution: "@types/express-serve-static-core@npm:4.17.35"
@@ -9434,6 +9441,7 @@ __metadata:
     "@biomejs/biome": "npm:^1.4.1"
     "@stellar/design-system": "npm:^1.1.0"
     "@stellar/tsconfig": "npm:^1.0.2"
+    "@types/events": "npm:^3"
     "@types/react": "npm:^18.2.41"
     "@types/react-dom": "npm:^18.2.17"
     babel-loader: "npm:^9.1.3"
@@ -9441,6 +9449,7 @@ __metadata:
     bignumber.js: "npm:^9.1.2"
     buffer: "npm:^6.0.3"
     css-loader: "npm:^6.8.1"
+    events: "npm:^3.3.0"
     file-loader: "npm:^6.2.0"
     html-loader: "npm:^4.2.0"
     html-webpack-plugin: "npm:^5.5.3"
