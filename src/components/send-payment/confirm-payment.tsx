@@ -43,8 +43,7 @@ export const ConfirmPayment = (props: ConfirmPaymentProps) => {
       props.pubKey,
       props.memo,
       builder,
-      server,
-      props.networkDetails.networkPassphrase
+      server
     )
     try {
       // Signs XDR representing the "transfer" transaction

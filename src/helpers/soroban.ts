@@ -23,7 +23,7 @@ export const BASE_FEE = '100'
 export const baseFeeXlm = stroopToXlm(BASE_FEE).toString()
 
 export const SendTxStatus: {
-  [index: string]: SorobanRpc.SendTransactionStatus
+  [index: string]: SorobanRpc.Api.SendTransactionStatus
 } = {
   Pending: 'PENDING',
   Duplicate: 'DUPLICATE',
@@ -105,7 +105,7 @@ export const simulateTx = async <ArgType>(
 ): Promise<ArgType> => {
   const response = await server.simulateTransaction(tx)
 
-  if (SorobanRpc.isSimulationSuccess(response) && response.result !== undefined) {
+  if (SorobanRpc.Api.isSimulationSuccess(response) && response.result !== undefined) {
     return scValToNative(response.result.retval)
   }
   throw new Error('cannot simulate transaction')
@@ -113,12 +113,16 @@ export const simulateTx = async <ArgType>(
 
 // Build and submits a transaction to the Soroban RPC
 // Polls for non-pending state, returns result after status is updated
-export const submitTx = async (signedXDR: string, networkPassphrase: string, server: Server) => {
+export const submitTx = async (
+  signedXDR: string,
+  networkPassphrase: string,
+  server: SorobanRpc.Server
+) => {
   const tx = TransactionBuilder.fromXDR(signedXDR, networkPassphrase)
 
   const sendResponse = await server.sendTransaction(tx)
 
-  if (sendResponse.errorResultXdr) {
+  if (sendResponse.errorResult) {
     throw new Error(ERRORS.UNABLE_TO_SUBMIT_TX)
   }
 
@@ -126,14 +130,14 @@ export const submitTx = async (signedXDR: string, networkPassphrase: string, ser
     let txResponse = await server.getTransaction(sendResponse.hash)
 
     // Poll this until the status is not "NOT_FOUND"
-    while (txResponse.status === SorobanRpc.GetTransactionStatus.NOT_FOUND) {
+    while (txResponse.status === SorobanRpc.Api.GetTransactionStatus.NOT_FOUND) {
       // See if the transaction is complete
       txResponse = await server.getTransaction(sendResponse.hash)
       // Wait a second
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
 
-    if (txResponse.status === SorobanRpc.GetTransactionStatus.SUCCESS) {
+    if (txResponse.status === SorobanRpc.Api.GetTransactionStatus.SUCCESS) {
       return txResponse.resultXdr.toXDR('base64')
     }
   }
@@ -206,8 +210,7 @@ export const makePayment = async (
   pubKey: string,
   memo: string,
   txBuilder: TransactionBuilder,
-  server: SorobanRpc.Server,
-  networkPassphrase: string
+  server: SorobanRpc.Server
 ) => {
   const contract = new Contract(tokenId)
   const tx = txBuilder
@@ -227,7 +230,7 @@ export const makePayment = async (
     tx.addMemo(Memo.text(memo))
   }
 
-  const preparedTransaction = await server.prepareTransaction(tx.build(), networkPassphrase)
+  const preparedTransaction = await server.prepareTransaction(tx.build())
 
   return preparedTransaction.toXDR()
 }
@@ -263,11 +266,11 @@ export const getEstimatedFee = async (
 
   const simResponse = await server.simulateTransaction(raw)
 
-  if (SorobanRpc.isSimulationError(simResponse)) {
+  if (SorobanRpc.Api.isSimulationError(simResponse)) {
     throw simResponse.error
   }
 
-  if (SorobanRpc.isSimulationSuccess(simResponse) && simResponse.result !== undefined) {
+  if (SorobanRpc.Api.isSimulationSuccess(simResponse) && simResponse.result !== undefined) {
     throw new Error('transaction simulation failed')
   }
 
