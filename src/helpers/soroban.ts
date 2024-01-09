@@ -4,7 +4,6 @@ import {
   Memo,
   MemoType,
   Operation,
-  Server,
   SorobanRpc,
   TimeoutInfinite,
   Transaction,
@@ -12,7 +11,7 @@ import {
   nativeToScVal,
   scValToNative,
   xdr,
-} from 'soroban-client'
+} from '@stellar/stellar-sdk'
 
 import BigNumber from 'bignumber.js'
 import { ERRORS } from './error'
@@ -80,7 +79,7 @@ export const parseTokenAmount = (value: string, decimals: number) => {
 
 // Get a server configfured for a specific network
 export const getServer = (networkDetails: NetworkDetails) =>
-  new Server(RPC_URLS[networkDetails.network], {
+  new SorobanRpc.Server(RPC_URLS[networkDetails.network], {
     allowHttp: networkDetails.networkUrl.startsWith('http://'),
   })
 
@@ -88,7 +87,7 @@ export const getServer = (networkDetails: NetworkDetails) =>
 export const getTxBuilder = async (
   pubKey: string,
   fee: string,
-  server: Server,
+  server: SorobanRpc.Server,
   networkPassphrase: string
 ) => {
   const source = await server.getAccount(pubKey)
@@ -102,7 +101,7 @@ export const getTxBuilder = async (
 //  Used in getTokenSymbol, getTokenName, getTokenDecimals, and getTokenBalance
 export const simulateTx = async <ArgType>(
   tx: Transaction<Memo<MemoType>, Operation[]>,
-  server: Server
+  server: SorobanRpc.Server
 ): Promise<ArgType> => {
   const response = await server.simulateTransaction(tx)
 
@@ -145,7 +144,7 @@ export const submitTx = async (signedXDR: string, networkPassphrase: string, ser
 export const getTokenSymbol = async (
   tokenId: string,
   txBuilder: TransactionBuilder,
-  server: Server
+  server: SorobanRpc.Server
 ) => {
   const contract = new Contract(tokenId)
   const tx = txBuilder.addOperation(contract.call('symbol')).setTimeout(TimeoutInfinite).build()
@@ -158,7 +157,7 @@ export const getTokenSymbol = async (
 export const getTokenName = async (
   tokenId: string,
   txBuilder: TransactionBuilder,
-  server: Server
+  server: SorobanRpc.Server
 ) => {
   const contract = new Contract(tokenId)
   const tx = txBuilder.addOperation(contract.call('name')).setTimeout(TimeoutInfinite).build()
@@ -171,7 +170,7 @@ export const getTokenName = async (
 export const getTokenDecimals = async (
   tokenId: string,
   txBuilder: TransactionBuilder,
-  server: Server
+  server: SorobanRpc.Server
 ) => {
   const contract = new Contract(tokenId)
   const tx = txBuilder.addOperation(contract.call('decimals')).setTimeout(TimeoutInfinite).build()
@@ -185,7 +184,7 @@ export const getTokenBalance = async (
   address: string,
   tokenId: string,
   txBuilder: TransactionBuilder,
-  server: Server
+  server: SorobanRpc.Server
 ) => {
   const params = [accountToScVal(address)]
   const contract = new Contract(tokenId)
@@ -207,7 +206,7 @@ export const makePayment = async (
   pubKey: string,
   memo: string,
   txBuilder: TransactionBuilder,
-  server: Server,
+  server: SorobanRpc.Server,
   networkPassphrase: string
 ) => {
   const contract = new Contract(tokenId)
@@ -240,7 +239,7 @@ export const getEstimatedFee = async (
   pubKey: string,
   memo: string,
   txBuilder: TransactionBuilder,
-  server: Server
+  server: SorobanRpc.Server
 ) => {
   const contract = new Contract(tokenId)
   const tx = txBuilder
