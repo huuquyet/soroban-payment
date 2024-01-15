@@ -45,17 +45,15 @@ impl Token {
 
     pub fn mint(e: Env, to: Address, amount: i128) {
         check_nonnegative_amount(amount);
-        // let admin = read_administrator(&e);
-        // admin.require_auth();
-        to.require_auth();
+        let admin = read_administrator(&e);
+        admin.require_auth();
 
         e.storage()
             .instance()
             .extend_ttl(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         receive_balance(&e, to.clone(), amount);
-        // TokenUtils::new(&e).events().mint(admin, to, amount);
-        TokenUtils::new(&e).events().mint(to.clone(), to, amount);
+        TokenUtils::new(&e).events().mint(admin, to, amount);
     }
 
     pub fn set_admin(e: Env, new_admin: Address) {

@@ -26,6 +26,7 @@ tasks:
   - name: CLI - Sandbox
     init: |
       yarn install
+      chmod +x ./initialize.sh
     command: |
       yarn setup
       yarn start
