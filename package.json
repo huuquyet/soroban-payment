@@ -14,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config config/webpack.prod.js",
-    "clean": "git clean -xdf",
+    "clean": "cargo clean && yarn cache clean && rm -rf .soroban",
     "lint": "yarn dlx @biomejs/biome check --apply .",
     "reset": "yarn clean && yarn setup",
     "setup": "./initialize.sh ${NETWORK:-futurenet} && yarn install",
