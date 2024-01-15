@@ -25,10 +25,10 @@ tasks:
       clear
   - name: CLI - Sandbox
     init: |
-      # make all
+      yarn install
     command: |
-      npm run setup
-      npm run start
+      yarn setup
+      yarn start
 vscode:
   extensions:
     - rust-lang.rust-analyzer
