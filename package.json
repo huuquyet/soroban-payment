@@ -1,6 +1,6 @@
 {
   "name": "soroban-payment",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An example dapp for making payments on Soroban",
   "keywords": [],
   "bugs": {
@@ -16,6 +16,8 @@
     "build": "webpack --config config/webpack.prod.js",
     "clean": "git clean -xdf",
     "lint": "yarn dlx @biomejs/biome check --apply .",
+    "reset": "yarn clean && yarn setup",
+    "setup": "./initialize.sh ${NETWORK:-futurenet} && yarn install",
     "start": "webpack-dev-server --config config/webpack.dev.js"
   },
   "browserslist": {
@@ -42,9 +44,9 @@
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
-    "@biomejs/biome": "^1.5.1",
+    "@biomejs/biome": "^1.5.2",
     "@stellar/tsconfig": "^1.0.2",
-    "@types/react": "^18.2.47",
+    "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "babel-loader": "^9.1.3",
     "babel-polyfill": "^6.26.0",
