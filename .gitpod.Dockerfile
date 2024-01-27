@@ -7,7 +7,7 @@ RUN curl -L https://github.com/stellar/soroban-tools/releases/download/v20.2.0/s
 RUN chmod +x ~/.local/bin/soroban
 RUN echo "source <(soroban completion --shell bash)" >> ~/.bashrc
 
-RUN curl -L https://github.com/mozilla/sccache/releases/download/v0.7.5/sccache-v0.7.5-x86_64-unknown-linux-musl.tar.gz | tar xz --strip-components 1 -C ~/.local/bin sccache-v0.7.5-x86_64-unknown-linux-musl/sccache
+RUN curl -L https://github.com/mozilla/sccache/releases/download/v0.7.6/sccache-v0.7.6-x86_64-unknown-linux-musl.tar.gz | tar xz --strip-components 1 -C ~/.local/bin sccache-v0.7.6-x86_64-unknown-linux-musl/sccache
 RUN chmod +x ~/.local/bin/sccache
 
 RUN curl -L https://github.com/watchexec/cargo-watch/releases/download/v8.5.2/cargo-watch-v8.5.2-x86_64-unknown-linux-gnu.tar.xz | tar xJ --strip-components 1 -C ~/.local/bin cargo-watch-v8.5.2-x86_64-unknown-linux-gnu/cargo-watch
