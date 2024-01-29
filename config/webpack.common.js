@@ -112,7 +112,7 @@ const commonConfig = (env) => ({
   stats: DEFAULT_STATS,
   devServer: {
     hot: true,
-    allowedHosts: "all",
+    allowedHosts: 'all',
     compress: true,
   },
 })

@@ -1,5 +1,4 @@
 import { Button, Heading, Select } from '@stellar/design-system'
-import React from 'react'
 
 interface ConnectWalletProps {
   selectedNetwork: string

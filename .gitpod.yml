@@ -28,7 +28,7 @@ tasks:
       yarn install
       chmod +x ./initialize.sh
     command: |
-      yarn setup
+      npm run setup
       yarn start
 vscode:
   extensions:

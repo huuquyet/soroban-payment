@@ -16,8 +16,8 @@
     "build": "webpack --config config/webpack.prod.js",
     "clean": "cargo clean && yarn cache clean && git clean -xdf",
     "doctor": "yarn dlx @yarnpkg/doctor",
-    "lint": "yarn dlx @biomejs/biome check --apply .",
-    "reset": "yarn clean && yarn setup",
+    "lint": "yarn dlx @biomejs/biome@1.4.1 check --apply .",
+    "reset": "yarn clean && npm run setup",
     "setup": "./initialize.sh ${NETWORK:-futurenet} && yarn install",
     "start": "webpack-dev-server --config config/webpack.dev.js",
     "update": "yarn upgrade-interactive",
@@ -39,7 +39,7 @@
     "bignumber.js": "^9.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "stellar-wallets-kit": "github:creit-tech/stellar-wallets-kit"
+    "stellar-wallets-kit": "github:Creit-Tech/Stellar-Wallets-Kit#276328e4d0747d72888a6a58b93e2e4d9f764c8e"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
