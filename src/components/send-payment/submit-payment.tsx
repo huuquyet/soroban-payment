@@ -1,5 +1,4 @@
 import { Button, Card, Heading, Icon, IconButton, Loader, Profile } from '@stellar/design-system'
-import React from 'react'
 import { copyContent } from '../../helpers/dom'
 
 interface SubmitPaymentProps {

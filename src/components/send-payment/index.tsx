@@ -1,9 +1,13 @@
+import {
+  FreighterModule,
+  ISupportedWallet,
+  StellarWalletsKit,
+  WalletNetwork,
+} from '@creit.tech/stellar-wallets-kit'
 import { Caption, Card, Layout, Loader, Notification, Profile } from '@stellar/design-system'
 import BigNumber from 'bignumber.js'
-import React from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ISupportedWallet, StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit'
-
 import { ERRORS } from '../../helpers/error'
 import { stroopToXlm } from '../../helpers/format'
 import { FUTURENET_DETAILS } from '../../helpers/network'
@@ -18,7 +22,6 @@ import {
   getTxBuilder,
   submitTx,
 } from '../../helpers/soroban'
-
 import { ConfirmPayment } from './confirm-payment'
 import { ConnectWallet } from './connect-wallet'
 import { Fee } from './fee'
@@ -41,41 +44,35 @@ export const SendPayment = (props: SendPaymentProps) => {
   const hasHeader = props.hasHeader === undefined ? true : props.hasHeader
 
   // Default to Futurenet network, only supported network for now
-  const [selectedNetwork] = React.useState(FUTURENET_DETAILS)
+  const [selectedNetwork] = useState(FUTURENET_DETAILS)
 
   // Initial state, empty states for token/transaction details
-  const [activePubKey, setActivePubKey] = React.useState(null as string | null)
-  const [stepCount, setStepCount] = React.useState(1 as StepCount)
-  const [connectionError, setConnectionError] = React.useState(null as string | null)
+  const [activePubKey, setActivePubKey] = useState(null as string | null)
+  const [stepCount, setStepCount] = useState(1 as StepCount)
+  const [connectionError, setConnectionError] = useState(null as string | null)
 
-  const [tokenId, setTokenId] = React.useState('')
-  const [tokenDecimals, setTokenDecimals] = React.useState(XLM_DECIMALS)
-  const [paymentDestination, setPaymentDest] = React.useState('')
-  const [sendAmount, setSendAmount] = React.useState('')
-  const [tokenSymbol, setTokenSymbol] = React.useState('')
-  const [tokenBalance, setTokenBalance] = React.useState('')
-  const [fee, setFee] = React.useState(BASE_FEE)
-  const [memo, setMemo] = React.useState('')
-  const [txResultXDR, settxResultXDR] = React.useState('')
-  const [signedXdr, setSignedXdr] = React.useState('')
+  const [tokenId, setTokenId] = useState('')
+  const [tokenDecimals, setTokenDecimals] = useState(XLM_DECIMALS)
+  const [paymentDestination, setPaymentDest] = useState('')
+  const [sendAmount, setSendAmount] = useState('')
+  const [tokenSymbol, setTokenSymbol] = useState('')
+  const [tokenBalance, setTokenBalance] = useState('')
+  const [fee, setFee] = useState(BASE_FEE)
+  const [memo, setMemo] = useState('')
+  const [txResultXDR, settxResultXDR] = useState('')
+  const [signedXdr, setSignedXdr] = useState('')
 
   // 3 basic loading states for now
-  const [isLoadingTokenDetails, setLoadingTokenDetails] = React.useState(false)
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [isGettingFee, setIsGettingFee] = React.useState(false)
+  const [isLoadingTokenDetails, setLoadingTokenDetails] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGettingFee, setIsGettingFee] = useState(false)
 
   // Setup swc, user will set the desired wallet on connect
-  const [SWKKit] = React.useState(
-    new StellarWalletsKit({
-      network: selectedNetwork.networkPassphrase as WalletNetwork,
-      selectedWallet: WalletType.FREIGHTER,
-    })
-  )
-
-  // Whenever the selected network changes, set the network on swc
-  React.useEffect(() => {
-    SWKKit.setNetwork(selectedNetwork.networkPassphrase as WalletNetwork)
-  }, [selectedNetwork.networkPassphrase, SWKKit])
+  const kit: StellarWalletsKit = new StellarWalletsKit({
+    network: WalletNetwork.FUTURENET,
+    selectedWalletId: new FreighterModule().productId,
+    modules: [new FreighterModule()],
+  })
 
   // with a user provided token ID, fetch token details
   async function setToken(id: string) {
@@ -227,7 +224,7 @@ export const SendPayment = (props: SendPaymentProps) => {
             fee={fee}
             memo={memo}
             networkDetails={selectedNetwork}
-            kit={SWKKit}
+            kit={kit}
             setError={setConnectionError}
           />
         )
@@ -296,15 +293,13 @@ export const SendPayment = (props: SendPaymentProps) => {
 
           if (!activePubKey) {
             // See https://github.com/Creit-Tech/Stellar-Wallets-Kit/tree/main for more options
-            await SWKKit.openModal({
-              allowedWallets: [WalletType.ALBEDO, WalletType.FREIGHTER, WalletType.XBULL],
+            await kit.openModal({
               onWalletSelected: async (option: ISupportedWallet) => {
                 try {
                   // Set selected wallet,  network, and public key
-                  SWKKit.setWallet(option.type)
-                  const publicKey = await SWKKit.getPublicKey()
+                  kit.setWallet(option.id)
+                  const publicKey = await kit.getPublicKey()
 
-                  await SWKKit.setNetwork(WalletNetwork.FUTURENET)
                   setActivePubKey(publicKey)
                 } catch (error) {
                   console.log(error)

@@ -1,6 +1,5 @@
+import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit'
 import { Button, Heading, Profile } from '@stellar/design-system'
-import React from 'react'
-import { StellarWalletsKit } from 'stellar-wallets-kit'
 import { ERRORS } from '../../helpers/error'
 import { xlmToStroop } from '../../helpers/format'
 import { NetworkDetails, signTx } from '../../helpers/network'

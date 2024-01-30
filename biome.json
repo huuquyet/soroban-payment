@@ -9,6 +9,7 @@
     "ignore": [
       "**/node_modules",
       "**/.pnp*",
+      ".soroban",
       ".vercel",
       ".yarn",
       "dist",
