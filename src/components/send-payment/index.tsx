@@ -1,4 +1,5 @@
 import {
+  FREIGHTER_ID,
   FreighterModule,
   ISupportedWallet,
   StellarWalletsKit,
@@ -70,7 +71,7 @@ export const SendPayment = (props: SendPaymentProps) => {
   // Setup swc, user will set the desired wallet on connect
   const kit: StellarWalletsKit = new StellarWalletsKit({
     network: WalletNetwork.FUTURENET,
-    selectedWalletId: new FreighterModule().productId,
+    selectedWalletId: FREIGHTER_ID,
     modules: [new FreighterModule()],
   })
 
