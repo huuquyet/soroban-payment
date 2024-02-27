@@ -21,7 +21,7 @@ elif command -v soroban &> /dev/null; then
   echo "Using soroban cli"
 else
   echo "Soroban not found, install soroban cli"
-  cargo install --locked --version 20.3.0 soroban-cli --debug --features opt
+  cargo install --locked --version 20.3.1 soroban-cli --debug --features opt
 fi
 
 if [[ "$SOROBAN_RPC_HOST" == "" ]]; then
