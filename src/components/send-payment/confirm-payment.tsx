@@ -1,46 +1,40 @@
-import React from "react";
-import { Button, Heading, Profile } from "@stellar/design-system";
-import { StellarWalletsKit } from "stellar-wallets-kit";
-import { xlmToStroop } from "../../helpers/format";
-import { NetworkDetails, signTx } from "../../helpers/network";
-import {
-  makePayment,
-  getTxBuilder,
-  parseTokenAmount,
-  getServer,
-} from "../../helpers/soroban";
-import { ERRORS } from "../../helpers/error";
+import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit'
+import { Button, Heading, Profile } from '@stellar/design-system'
+import { ERRORS } from '../../helpers/error'
+import { xlmToStroop } from '../../helpers/format'
+import { NetworkDetails, signTx } from '../../helpers/network'
+import { getServer, getTxBuilder, makePayment, parseTokenAmount } from '../../helpers/soroban'
 
 interface ConfirmPaymentProps {
-  amount: string;
-  destination: string;
-  fee: string;
-  pubKey: string;
-  kit: StellarWalletsKit;
-  memo: string;
-  network: string;
-  onTxSign: (xdr: string) => void;
-  tokenId: string;
-  tokenDecimals: number;
-  tokenSymbol: string;
-  networkDetails: NetworkDetails;
-  setError: (error: string) => void;
+  amount: string
+  destination: string
+  fee: string
+  pubKey: string
+  kit: StellarWalletsKit
+  memo: string
+  network: string
+  onTxSign: (xdr: string) => void
+  tokenId: string
+  tokenDecimals: number
+  tokenSymbol: string
+  networkDetails: NetworkDetails
+  setError: (error: string) => void
 }
 
 export const ConfirmPayment = (props: ConfirmPaymentProps) => {
   const signWithFreighter = async () => {
     // Need to use the perviously fetched token decimals to properly display the amount value
-    const amount = parseTokenAmount(props.amount, props.tokenDecimals);
+    const amount = parseTokenAmount(props.amount, props.tokenDecimals)
     // Get an instance of a Soroban RPC set to the selected network
-    const server = getServer(props.networkDetails);
+    const server = getServer(props.networkDetails)
 
     // Gets a transaction builder and uses it to add a "transfer" operation and build the corresponding XDR
     const builder = await getTxBuilder(
       props.pubKey,
       xlmToStroop(props.fee).toString(),
       server,
-      props.networkDetails.networkPassphrase,
-    );
+      props.networkDetails.networkPassphrase
+    )
     const xdr = await makePayment(
       props.tokenId,
       amount.toNumber(),
@@ -48,18 +42,17 @@ export const ConfirmPayment = (props: ConfirmPaymentProps) => {
       props.pubKey,
       props.memo,
       builder,
-      server,
-      props.networkDetails.networkPassphrase,
-    );
+      server
+    )
     try {
       // Signs XDR representing the "transfer" transaction
-      const signedTx = await signTx(xdr, props.pubKey, props.kit);
-      props.onTxSign(signedTx);
+      const signedTx = await signTx(xdr, props.pubKey, props.kit)
+      props.onTxSign(signedTx)
     } catch (error) {
-      console.log(error);
-      props.setError(ERRORS.UNABLE_TO_SIGN_TX);
+      console.log(error)
+      props.setError(ERRORS.UNABLE_TO_SIGN_TX)
     }
-  };
+  }
   return (
     <>
       <Heading as="h1" size="sm">
@@ -92,15 +85,10 @@ export const ConfirmPayment = (props: ConfirmPaymentProps) => {
         </div>
       </div>
       <div className="submit-row-confirm">
-        <Button
-          size="md"
-          variant="tertiary"
-          isFullWidth
-          onClick={signWithFreighter}
-        >
+        <Button size="md" variant="tertiary" isFullWidth onClick={signWithFreighter}>
           Sign with Freighter
         </Button>
       </div>
     </>
-  );
-};
+  )
+}
