@@ -1,21 +1,21 @@
-import React, { ChangeEvent } from "react";
-import { Button, Heading, Input } from "@stellar/design-system";
+import { Button, Heading, Input } from '@stellar/design-system'
+import { ChangeEvent } from 'react'
 
 interface FeeProps {
-  fee: string;
-  memo: string;
-  onClick: () => void;
-  setFee: (fee: string) => void;
-  setMemo: (memo: string) => void;
+  fee: string
+  memo: string
+  onClick: () => void
+  setFee: (fee: string) => void
+  setMemo: (memo: string) => void
 }
 
 export const Fee = (props: FeeProps) => {
   const handleFeeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    props.setFee(event.target.value);
-  };
+    props.setFee(event.target.value)
+  }
   const handleMemoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    props.setMemo(event.target.value);
-  };
+    props.setMemo(event.target.value)
+  }
 
   return (
     <>
@@ -37,15 +37,10 @@ export const Fee = (props: FeeProps) => {
         onChange={handleMemoChange}
       />
       <div className="submit-row-fee">
-        <Button
-          size="md"
-          variant="tertiary"
-          isFullWidth
-          onClick={props.onClick}
-        >
+        <Button size="md" variant="tertiary" isFullWidth onClick={props.onClick}>
           Next
         </Button>
       </div>
     </>
-  );
-};
+  )
+}

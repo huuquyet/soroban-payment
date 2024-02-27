@@ -1,14 +1,13 @@
-import React from "react";
-import { Button, Heading, Select } from "@stellar/design-system";
+import { Button, Heading, Select } from '@stellar/design-system'
 
 interface ConnectWalletProps {
-  selectedNetwork: string;
-  pubKey: string | null;
-  onClick: () => void;
+  selectedNetwork: string
+  pubKey: string | null
+  onClick: () => void
 }
 
 export const ConnectWallet = (props: ConnectWalletProps) => {
-  const text = props.pubKey ? "Next" : "Connect Freighter";
+  const text = props.pubKey ? 'Next' : 'Connect Freighter'
   return (
     <>
       <Heading as="h1" size="sm">
@@ -24,15 +23,10 @@ export const ConnectWallet = (props: ConnectWalletProps) => {
         <option>{props.selectedNetwork}</option>
       </Select>
       <div className="submit-row">
-        <Button
-          size="md"
-          variant="tertiary"
-          isFullWidth
-          onClick={props.onClick}
-        >
+        <Button size="md" variant="tertiary" isFullWidth onClick={props.onClick}>
           {text}
         </Button>
       </div>
     </>
-  );
-};
+  )
+}
