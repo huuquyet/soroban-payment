@@ -1,15 +1,15 @@
-const { merge } = require("webpack-merge");
-const { DefinePlugin } = require("webpack");
-const I18nextWebpackPlugin = require("i18next-scanner-webpack");
-const { commonConfig } = require("./webpack.common.js");
+const { merge } = require('webpack-merge')
+const { DefinePlugin } = require('webpack')
+const I18nextWebpackPlugin = require('i18next-scanner-webpack')
+const { commonConfig } = require('./webpack.common.js')
 
-const LOCALES = ["en", "pt"];
+const LOCALES = ['en', 'pt']
 
 const prodConfig = (env = { PRODUCTION: false, TRANSLATIONS: false }) => ({
-  mode: "production",
+  mode: 'production',
   optimization: {
     minimize: env.PRODUCTION,
-    runtimeChunk: "single",
+    runtimeChunk: 'single',
   },
 
   plugins: [
@@ -20,12 +20,12 @@ const prodConfig = (env = { PRODUCTION: false, TRANSLATIONS: false }) => ({
       ? [
           new I18nextWebpackPlugin({
             async: true,
-            dest: "./",
-            extensions: [".ts", ".tsx"],
+            dest: './',
+            extensions: ['.ts', '.tsx'],
             options: {
               createOldCatalogs: false,
               locales: LOCALES,
-              output: "src/locales/$LOCALE/$NAMESPACE.json",
+              output: 'src/locales/$LOCALE/$NAMESPACE.json',
               sort: true,
               useKeysAsDefaultValue: true,
             },
@@ -34,8 +34,8 @@ const prodConfig = (env = { PRODUCTION: false, TRANSLATIONS: false }) => ({
       : []),
   ],
   performance: {
-    hints: "warning",
+    hints: 'warning',
   },
-});
+})
 
-module.exports = (env) => merge(prodConfig(env), commonConfig(env));
+module.exports = (env) => merge(prodConfig(env), commonConfig(env))
