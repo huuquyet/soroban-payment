@@ -43,15 +43,12 @@ fi
 case "$1" in
 standalone)
   SOROBAN_NETWORK_PASSPHRASE="Standalone Network ; February 2017"
-  FRIENDBOT_URL="$SOROBAN_RPC_HOST/friendbot"
   ;;
 futurenet)
   SOROBAN_NETWORK_PASSPHRASE="Test SDF Future Network ; October 2022"
-  FRIENDBOT_URL="https://friendbot-futurenet.stellar.org/"
   ;;
 testnet)
   SOROBAN_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
-  FRIENDBOT_URL="https://friendbot.stellar.org"
   ;;
 *)
   echo "Usage: $0 standalone|futurenet|testnet [rpc-host]"
@@ -61,27 +58,24 @@ esac
 
 echo "Using $NETWORK network"
 echo "  RPC URL: $SOROBAN_RPC_URL"
-echo "  Friendbot URL: $FRIENDBOT_URL"
 
 echo Add the $NETWORK network to cli client
 soroban config network add \
   --rpc-url "$SOROBAN_RPC_URL" \
   --network-passphrase "$SOROBAN_NETWORK_PASSPHRASE" "$NETWORK"
 
-echo "Add $NETWORK to shared config"
+# echo "Add $NETWORK to shared config"
 # echo "{ \"network\": \"$NETWORK\", \"rpcUrl\": \"$SOROBAN_RPC_URL\", \"networkPassphrase\": \"$SOROBAN_NETWORK_PASSPHRASE\" }" > ./src/shared/config.json
 
 if !(soroban config identity ls | grep token-admin 2>&1 >/dev/null); then
   echo "Create the token-admin identity"
   soroban config identity generate token-admin --network $NETWORK
 fi
-ADMIN_ADDRESS="$(soroban config identity address token-admin)"
 
 # This will fail if the account already exists, but it'll still be fine.
 echo "Fund token-admin & user account from friendbot"
 soroban config identity fund token-admin --network $NETWORK
 soroban config identity fund $USER --network $NETWORK
-# curl --silent -X POST "$FRIENDBOT_URL?addr=$ADMIN_ADDRESS" >/dev/null
 
 ARGS="--network $NETWORK --source token-admin"
 
