@@ -2,53 +2,49 @@
 
 set -e
 
-NETWORK="$1"
+NETWORK=$1
 
-SOROBAN_RPC_HOST="$2"
-
-PATH=./target/bin:$PATH
+SOROBAN_RPC_HOST=$2
 
 USER="YOUR_PUBLIC_KEY" # your freighter public key
 
-if [[ -f "./.soroban/contracts" ]]; then
+if [[ -d "./.soroban/contracts" ]]; then
   echo "Found existing '.soroban/contracts' directory; already initialized."
   exit 0
 fi
 
-if [[ -f "./target/bin/soroban" ]]; then
+if [[ -d "./target/bin/soroban" ]]; then
   echo "Using soroban binary from ./target/bin"
 elif command -v soroban &> /dev/null; then
   echo "Using soroban cli"
 else
   echo "Soroban not found, install soroban cli"
-  cargo install --locked --version 20.3.1 soroban-cli --debug --features opt
+  cargo install --locked soroban-cli --debug --features opt
 fi
 
-if [[ "$SOROBAN_RPC_HOST" == "" ]]; then
-  if [[ "$NETWORK" == "futurenet" ]]; then
-    SOROBAN_RPC_HOST="https://rpc-futurenet.stellar.org"
-    SOROBAN_RPC_URL="$SOROBAN_RPC_HOST"
-  elif [[ "$NETWORK" == "testnet" ]]; then
-    SOROBAN_RPC_HOST="https://soroban-testnet.stellar.org"
-    SOROBAN_RPC_URL="$SOROBAN_RPC_HOST"
-  else
-     # assumes standalone on quickstart, which has the soroban/rpc path
-    SOROBAN_RPC_HOST="http://localhost:8000"
-    SOROBAN_RPC_URL="$SOROBAN_RPC_HOST/soroban/rpc"
-  fi
-else 
-  SOROBAN_RPC_URL="$SOROBAN_RPC_HOST"
+if [[ $SOROBAN_RPC_HOST != "" ]]; then
+  SOROBAN_RPC_URL=$SOROBAN_RPC_HOST
+if [[ $NETWORK == "futurenet" ]]; then
+  SOROBAN_RPC_URL="https://rpc-futurenet.stellar.org"
+elif [[ $NETWORK == "testnet" ]]; then
+  SOROBAN_RPC_URL="https://soroban-testnet.stellar.org"
+else
+    # assumes standalone on quickstart, which has the soroban/rpc path
+  SOROBAN_RPC_URL="http://localhost:8000/soroban/rpc"
 fi
 
-case "$1" in
-standalone)
-  SOROBAN_NETWORK_PASSPHRASE="Standalone Network ; February 2017"
-  ;;
+case $NETWORK in
 futurenet)
+  echo "Using Futurenet network with RPC URL: $SOROBAN_RPC_URL"
   SOROBAN_NETWORK_PASSPHRASE="Test SDF Future Network ; October 2022"
   ;;
 testnet)
+  echo "Using Testnet network with RPC URL: $SOROBAN_RPC_URL"
   SOROBAN_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
+  ;;
+standalone)
+  echo "Using standalone network with RPC URL: $SOROBAN_RPC_URL"
+  SOROBAN_NETWORK_PASSPHRASE="Standalone Network ; February 2017"
   ;;
 *)
   echo "Usage: $0 standalone|futurenet|testnet [rpc-host]"
@@ -56,26 +52,23 @@ testnet)
   ;;
 esac
 
-echo "Using $NETWORK network"
-echo "  RPC URL: $SOROBAN_RPC_URL"
-
 echo Add the $NETWORK network to cli client
-soroban config network add \
-  --rpc-url "$SOROBAN_RPC_URL" \
-  --network-passphrase "$SOROBAN_NETWORK_PASSPHRASE" "$NETWORK"
+soroban network add \
+  --rpc-url $SOROBAN_RPC_URL \
+  --network-passphrase "$SOROBAN_NETWORK_PASSPHRASE" $NETWORK
 
 # echo "Add $NETWORK to shared config"
 # echo "{ \"network\": \"$NETWORK\", \"rpcUrl\": \"$SOROBAN_RPC_URL\", \"networkPassphrase\": \"$SOROBAN_NETWORK_PASSPHRASE\" }" > ./src/shared/config.json
 
-if !(soroban config identity ls | grep token-admin 2>&1 >/dev/null); then
+if !(soroban keys ls | grep token-admin 2>&1 >/dev/null); then
   echo "Create the token-admin identity"
-  soroban config identity generate token-admin --network $NETWORK
+  soroban keys generate token-admin --network $NETWORK
 fi
 
 # This will fail if the account already exists, but it'll still be fine.
 echo "Fund token-admin & user account from friendbot"
-soroban config identity fund token-admin --network $NETWORK
-soroban config identity fund $USER --network $NETWORK
+soroban keys fund token-admin --network $NETWORK
+soroban keys fund $USER --network $NETWORK
 
 ARGS="--network $NETWORK --source token-admin"
 
@@ -102,7 +95,7 @@ echo "Contract deployed succesfully with ID: $TOKEN_ID"
 echo "Initialize the Demo TOKEN contract"
 soroban contract invoke \
   $ARGS \
-  --id "$TOKEN_ID" \
+  --id $TOKEN_ID \
   -- \
   initialize \
   --symbol DT \
@@ -114,13 +107,18 @@ soroban contract invoke \
 echo "Minting the Demo TOKEN to user"
 soroban contract invoke \
   $ARGS \
-  --id "$TOKEN_ID" \
+  --id $TOKEN_ID \
   -- \
   mint \
   --to $USER \
   --amount 1000000000
 
 echo "Generate bindings contracts"
-soroban contract bindings typescript --network $NETWORK --id $TOKEN_ID --wasm $TOKEN_OPTIMIZED --output-dir ./.soroban/contracts/token --overwrite
+soroban contract bindings typescript \
+  --network $NETWORK \
+  --id $TOKEN_ID \
+  --wasm $TOKEN_OPTIMIZED \
+  --output-dir ./.soroban/contracts/token \
+  --overwrite
 
 echo "Done"
