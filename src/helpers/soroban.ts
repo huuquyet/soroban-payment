@@ -2,21 +2,21 @@ import {
   Address,
   Contract,
   Memo,
-  MemoType,
-  Operation,
+  type MemoType,
+  type Operation,
   SorobanRpc,
   TimeoutInfinite,
-  Transaction,
+  type Transaction,
   TransactionBuilder,
   nativeToScVal,
   scValToNative,
-  xdr,
+  type xdr,
 } from '@stellar/stellar-sdk'
 
 import BigNumber from 'bignumber.js'
 import { ERRORS } from './error'
 import { stroopToXlm } from './format'
-import { NetworkDetails } from './network'
+import type { NetworkDetails } from './network'
 
 // TODO: once soroban supports estimated fees, we can fetch this
 export const BASE_FEE = '100'
@@ -35,6 +35,7 @@ export const XLM_DECIMALS = 7
 
 export const RPC_URLS: { [key: string]: string } = {
   FUTURENET: 'https://rpc-futurenet.stellar.org/',
+  TESTNET: 'https://soroban-testnet.stellar.org/',
 }
 
 // Can be used whenever you need an Address argument for a contract method
@@ -277,8 +278,8 @@ export const getEstimatedFee = async (
   // 'classic' tx fees are measured as the product of tx.fee * 'number of operations', In soroban contract tx,
   // there can only be single operation in the tx, so can make simplification
   // of total classic fees for the soroban transaction will be equal to incoming tx.fee + minResourceFee.
-  const classicFeeNum = parseInt(raw.fee, 10) || 0
-  const minResourceFeeNum = parseInt(simResponse.minResourceFee, 10) || 0
+  const classicFeeNum = Number.parseInt(raw.fee, 10) || 0
+  const minResourceFeeNum = Number.parseInt(simResponse.minResourceFee, 10) || 0
   const fee = (classicFeeNum + minResourceFeeNum).toString()
   return fee
 }

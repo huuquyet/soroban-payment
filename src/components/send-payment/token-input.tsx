@@ -1,5 +1,5 @@
 import { Button, Heading, Input } from '@stellar/design-system'
-import React, { ChangeEvent } from 'react'
+import React, { type ChangeEvent } from 'react'
 
 interface TokenInputProps {
   onClick: (value: string) => void

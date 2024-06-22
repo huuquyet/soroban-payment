@@ -14,22 +14,23 @@ tasks:
       --enable-soroban-rpc
   # This "CLI - Futurenet" task opens a terminal for you to interact with the
   # futurenet network.
-  - name: CLI - Futurenet
+  - name: CLI - Testnet
     # We specify some required environment variables for use on the futurenet.
     env:
       # This can be set by the user, but this terminal is dedicated to futurenet so set for convenience.
-      SOROBAN_RPC_URL: "https://rpc-futurenet.stellar.org/"
-      SOROBAN_NETWORK_PASSPHRASE: "Test SDF Future Network ; October 2022"
+      SOROBAN_RPC_URL: "https://soroban-testnet.stellar.org/"
+      SOROBAN_NETWORK_PASSPHRASE: "Test SDF Network ; September 2015"
     # To keep things tidy, we clear the terminal from the previous output.
     command: |
       clear
   - name: CLI - Sandbox
     init: |
-      yarn install
       chmod +x ./initialize.sh
     command: |
-      npm run setup
-      yarn start
+      curl -fsSL https://bun.sh/install | bash
+      source /home/gitpod/.bashrc
+      bun setup
+      bun start
 vscode:
   extensions:
     - rust-lang.rust-analyzer
@@ -41,8 +42,4 @@ ports:
   - name: Futurenet
     port: 8000
     visibility: public
-    onOpen: ignore
-  # This port is open for "Something with cargo test I think"??
-  - port: 4226
-    visibility: private
     onOpen: ignore

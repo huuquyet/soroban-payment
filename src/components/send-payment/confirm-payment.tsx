@@ -1,8 +1,8 @@
-import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit'
+import type { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit'
 import { Button, Heading, Profile } from '@stellar/design-system'
 import { ERRORS } from '../../helpers/error'
 import { xlmToStroop } from '../../helpers/format'
-import { NetworkDetails, signTx } from '../../helpers/network'
+import { type NetworkDetails, signTx } from '../../helpers/network'
 import { getServer, getTxBuilder, makePayment, parseTokenAmount } from '../../helpers/soroban'
 
 interface ConfirmPaymentProps {

@@ -29,8 +29,8 @@ impl Token {
             panic!("already initialized")
         }
         write_administrator(&e, &admin);
-        if decimal > u8::MAX.into() {
-            panic!("Decimal must fit in a u8");
+        if decimal > 18 {
+            panic!("Decimal must not be greater than 18");
         }
 
         write_metadata(
@@ -71,7 +71,8 @@ impl Token {
     #[cfg(test)]
     pub fn get_allowance(e: Env, from: Address, spender: Address) -> Option<AllowanceValue> {
         let key = DataKey::Allowance(AllowanceDataKey { from, spender });
-        e.storage().temporary().get::<_, AllowanceValue>(&key)
+        let allowance = e.storage().temporary().get::<_, AllowanceValue>(&key);
+        allowance
     }
 }
 

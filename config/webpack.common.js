@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
-const path = require('path')
+const path = require('node:path')
 
 const { DEFAULT_STATS } = require.resolve('./stats')
 

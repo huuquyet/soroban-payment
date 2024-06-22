@@ -1,8 +1,55 @@
 {
   "name": "soroban-payment",
-  "version": "0.1.0",
   "description": "An example dapp for making payments on Soroban",
-  "keywords": [],
+  "version": "0.1.0",
+  "main": "src/index.tsx",
+  "private": true,
+  "scripts": {
+    "build": "bunx webpack --config config/webpack.prod.js",
+    "clean": "cargo clean && git clean -xdf",
+    "lint": "bunx @biomejs/biome check --write .",
+    "reset": "bun clean && npm run setup",
+    "setup": "./initialize.sh ${NETWORK:-testnet} && bun install",
+    "start": "bunx webpack-dev-server --config config/webpack.dev.js"
+  },
+  "dependencies": {
+    "@creit.tech/stellar-wallets-kit": "^0.9.0",
+    "@stellar/design-system": "^2.0.0-beta.13",
+    "@stellar/stellar-sdk": "^12.1.0",
+    "bignumber.js": "^9.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "@stellar/tsconfig": "^1.0.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "babel-loader": "^9.1.3",
+    "babel-polyfill": "^6.26.0",
+    "buffer": "^6.0.3",
+    "css-loader": "^7.1.2",
+    "events": "^3.3.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "i18next-scanner-webpack": "^0.9.1",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.77.6",
+    "sass-loader": "^14.2.1",
+    "ts-loader": "^9.5.1",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.5.2",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-merge": "^5.10.0",
+    "@types/bun": "^1.1.5"
+  },
   "bugs": {
     "url": "https://github.com/stellar/soroban-dapps-challenge/issues"
   },
@@ -11,65 +58,5 @@
     "type": "git",
     "url": "git+https://github.com/huuquyet/soroban-payment.git"
   },
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --config config/webpack.prod.js",
-    "clean": "cargo clean && yarn cache clean && git clean -xdf",
-    "doctor": "yarn dlx @yarnpkg/doctor",
-    "lint": "yarn dlx @biomejs/biome check --apply .",
-    "reset": "yarn clean && npm run setup",
-    "setup": "./initialize.sh ${NETWORK:-futurenet} && yarn install",
-    "start": "webpack-dev-server --config config/webpack.dev.js",
-    "update": "yarn upgrade-interactive",
-    "vscode": "yarn dlx @yarnpkg/sdks vscode"
-  },
-  "browserslist": {
-    "production": [
-      "last 3 chrome version",
-      "last 3 firefox version"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version"
-    ]
-  },
-  "dependencies": {
-    "@creit.tech/stellar-wallets-kit": "^0.6.1",
-    "@stellar/design-system": "^1.1.2",
-    "@stellar/stellar-sdk": "^11.2.2",
-    "bignumber.js": "^9.1.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
-    "@babel/preset-env": "^7.24.0",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/preset-typescript": "^7.23.3",
-    "@biomejs/biome": "^1.6.0",
-    "@stellar/tsconfig": "^1.0.2",
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
-    "babel-loader": "^9.1.3",
-    "babel-polyfill": "^6.26.0",
-    "buffer": "^6.0.3",
-    "css-loader": "^6.10.0",
-    "events": "^3.3.0",
-    "file-loader": "^6.2.0",
-    "html-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
-    "i18next-scanner-webpack": "^0.9.1",
-    "mini-css-extract-plugin": "^2.8.1",
-    "sass": "^1.71.1",
-    "sass-loader": "^14.1.1",
-    "ts-loader": "^9.5.1",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "typescript": "^5.4.2",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2",
-    "webpack-merge": "^5.10.0"
-  },
-  "packageManager": "yarn@4.1.0"
+  "keywords": []
 }

@@ -13,9 +13,7 @@ if [[ -d "./.soroban/contracts" ]]; then
   exit 0
 fi
 
-if [[ -d "./target/bin/soroban" ]]; then
-  echo "Using soroban binary from ./target/bin"
-elif command -v soroban &> /dev/null; then
+if type soroban >/dev/null; then
   echo "Using soroban cli"
 else
   echo "Soroban not found, install soroban cli"
@@ -24,12 +22,12 @@ fi
 
 if [[ $SOROBAN_RPC_HOST != "" ]]; then
   SOROBAN_RPC_URL=$SOROBAN_RPC_HOST
-if [[ $NETWORK == "futurenet" ]]; then
+elif [[ $NETWORK == "futurenet" ]]; then
   SOROBAN_RPC_URL="https://rpc-futurenet.stellar.org"
 elif [[ $NETWORK == "testnet" ]]; then
   SOROBAN_RPC_URL="https://soroban-testnet.stellar.org"
 else
-    # assumes standalone on quickstart, which has the soroban/rpc path
+  # assumes standalone on quickstart, which has the soroban/rpc path
   SOROBAN_RPC_URL="http://localhost:8000/soroban/rpc"
 fi
 
@@ -52,7 +50,7 @@ standalone)
   ;;
 esac
 
-echo Add the $NETWORK network to cli client
+echo "Add the $NETWORK network to cli client"
 soroban network add \
   --rpc-url $SOROBAN_RPC_URL \
   --network-passphrase "$SOROBAN_NETWORK_PASSPHRASE" $NETWORK
@@ -62,13 +60,13 @@ soroban network add \
 
 if !(soroban keys ls | grep token-admin 2>&1 >/dev/null); then
   echo "Create the token-admin identity"
-  soroban keys generate token-admin --network $NETWORK
+  soroban keys generate --global token-admin --network $NETWORK
 fi
 
 # This will fail if the account already exists, but it'll still be fine.
 echo "Fund token-admin & user account from friendbot"
-soroban keys fund token-admin --network $NETWORK
-soroban keys fund $USER --network $NETWORK
+soroban keys fund --global token-admin --network $NETWORK
+soroban keys fund --global $USER --network $NETWORK
 
 ARGS="--network $NETWORK --source token-admin"
 

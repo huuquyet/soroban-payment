@@ -12,7 +12,7 @@ The Payment DApp relies on the following dependencies:
 
 - Node (>=16.14.0 <=18.0.0): https://nodejs.org/en/download/
 
-- Yarn (v1.22.5 or newer): https://classic.yarnpkg.com/en/docs/install
+- Bun: https://bun.sh
 
 - Freighter wallet(v5.0 or newer): https://www.freighter.app/
 
@@ -54,7 +54,7 @@ To use the Payment DApp, follow these steps:
 3. Install the dependencies by running the following:
 
    ```
-   yarn
+   bun install
    ```
 
 4. If you are using the Freighter wallet, ensure that experimental mode is
@@ -98,13 +98,13 @@ To use the Payment DApp, follow these steps:
 ## Build the Project
 
 ```
-yarn && yarn build
+bun setup && bun run build
 ```
 
 ## Starting a Dev Environment
 
 ```
-yarn && yarn start
+bun setup && bun start
 ```
 
 ## Contributions

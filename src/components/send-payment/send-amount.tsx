@@ -1,6 +1,6 @@
 import { Button, Heading, Input } from '@stellar/design-system'
 import BigNumber from 'bignumber.js'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import { formatTokenAmount } from '../../helpers/format'
 
 interface SendAmountProps {

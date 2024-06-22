@@ -1,5 +1,5 @@
 import { Button, Heading, Input } from '@stellar/design-system'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 
 interface FeeProps {
   fee: string

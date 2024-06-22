@@ -1,7 +1,7 @@
 import {
   FREIGHTER_ID,
   FreighterModule,
-  ISupportedWallet,
+  type ISupportedWallet,
   StellarWalletsKit,
   WalletNetwork,
 } from '@creit.tech/stellar-wallets-kit'
@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ERRORS } from '../../helpers/error'
 import { stroopToXlm } from '../../helpers/format'
-import { FUTURENET_DETAILS } from '../../helpers/network'
+import { TESTNET_DETAILS } from '../../helpers/network'
 import {
   BASE_FEE,
   XLM_DECIMALS,
@@ -45,7 +45,7 @@ export const SendPayment = (props: SendPaymentProps) => {
   const hasHeader = props.hasHeader === undefined ? true : props.hasHeader
 
   // Default to Futurenet network, only supported network for now
-  const [selectedNetwork] = useState(FUTURENET_DETAILS)
+  const [selectedNetwork] = useState(TESTNET_DETAILS)
 
   // Initial state, empty states for token/transaction details
   const [activePubKey, setActivePubKey] = useState(null as string | null)
@@ -70,7 +70,7 @@ export const SendPayment = (props: SendPaymentProps) => {
 
   // Setup swc, user will set the desired wallet on connect
   const kit: StellarWalletsKit = new StellarWalletsKit({
-    network: WalletNetwork.FUTURENET,
+    network: WalletNetwork.TESTNET,
     selectedWalletId: FREIGHTER_ID,
     modules: [new FreighterModule()],
   })
